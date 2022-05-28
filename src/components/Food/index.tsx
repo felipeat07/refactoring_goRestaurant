@@ -3,10 +3,24 @@ import React, { useState, useEffect } from 'react';
 
 import { Container } from './styles';
 import api from '../../services/api';
+import { string } from 'yup';
 
 
+interface FoodProps {
+  food: {
+          id:number;
+          name:string;
+          image:string;
+          description:string;
+          price:number;
+          available:boolean;
+  }
+  handleEditFood: (food: FoodProps["food"]) => void;
+  handleDelete: (id: number) => void;
+}
 
-export function Food() {
+
+export function Food({ food, handleEditFood, handleDelete}: FoodProps) {
   const [isAvailable, setIsAvailable] = useState(true);
 
   useEffect(() => {
@@ -44,7 +58,7 @@ export function Food() {
           <button
             type="button"
             className="icon"
-            onClick={this.setEditingFood}
+            onClick={setEditingFood}
             data-testid={`edit-food-${food.id}`}
           >
             <FiEdit3 size={20} />
@@ -68,7 +82,7 @@ export function Food() {
               id={`available-switch-${food.id}`}
               type="checkbox"
               checked={isAvailable}
-              onChange={this.toggleAvailable}
+              onChange={toggleAvailable}
               data-testid={`change-status-food-${food.id}`}
             />
             <span className="slider" />
